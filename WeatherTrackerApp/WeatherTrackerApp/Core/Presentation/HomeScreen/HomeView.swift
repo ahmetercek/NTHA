@@ -12,6 +12,13 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
-        Text("Hello World!")
+        VStack {
+            // Search Results
+            Spacer()
+            Button("Test") {
+                viewModel.searchCity("Paris")
+            }
+            Spacer()
+        }
     }
 }
