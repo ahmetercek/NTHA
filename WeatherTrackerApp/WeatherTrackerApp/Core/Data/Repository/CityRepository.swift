@@ -42,11 +42,15 @@ final class CityRepositoryImpl: CityRepository {
         if let localCity = try? fetchLocalCity() {
             do {
                 // Fetch fresh data from WeatherService
-                let freshWeather = try await weatherService.fetchWeather(for: localCity.name ?? "")
+                guard let cityName = localCity.name, !cityName.isEmpty else {
+                    throw CoreDataError.fetchFailed("City name is missing or empty in local data.")
+                }
+
+                let freshWeather = try await weatherService.fetchWeather(for: cityName)
                 try replaceCity(with: freshWeather) // Save fresh data locally
                 return try fetchLocalCity() // Return updated local city
             } catch {
-                // If fetching fresh data fails, return local city
+                // Log the error and return local data
                 print("Failed to fetch fresh data. Returning local data. Error: \(error.localizedDescription)")
                 return localCity
             }
