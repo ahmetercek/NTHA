@@ -23,11 +23,10 @@ struct HomeView: View {
             // Search Bar
             SearchBarView()
                 .padding(.top, 22)  // Top padding
-                .padding(.leading, 12)  // Left padding
-                .padding(.trailing, 12) // Optional right padding for
-            Spacer()
+            
             // Main Content
             mainContent
+            Spacer()
             Spacer()
         }
         .padding(.horizontal, 12)
@@ -56,7 +55,9 @@ struct HomeView: View {
             ProgressView("Searching...")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .success(let results):
-            SearchResultsView(results: results)
+            SearchResultsView(results: results) { city in
+                            viewModel.saveCity(city) // Save city action
+            }
         case .error(let message):
             ErrorView(message: message)
         }
@@ -66,7 +67,10 @@ struct HomeView: View {
     private var savedCityContent: some View {
         switch viewModel.savedCityState {
         case .idle:
-            EmptyView() // Use an empty view for idle state
+            //EmptyView() // Use an empty view for idle state
+            Spacer()
+            NoCitySelectedView()
+            Spacer()
         case .loading:
             ProgressView("Loading saved city...")
         case .success(let savedCity):
@@ -78,14 +82,16 @@ struct HomeView: View {
     
     struct SearchResultsView: View {
         let results: [WeatherResponse]
+        let onCityTap: (WeatherResponse) -> Void
 
         var body: some View {
             ScrollView {
                 LazyVStack {
                     ForEach(results, id: \.location.name) { city in
                         CityCard(cityName: city.location.name,
-                                 temperature: city.current.tempC) {
-                            // Save city action
+                                 temperature: city.current.tempC,
+                                 iconURL: city.current.condition.icon) {
+                            onCityTap(city) // Save action passed from HomeView
                         }
                     }
                 }

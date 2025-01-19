@@ -79,7 +79,7 @@ final class HomeViewModel: ObservableObject {
 
     @MainActor
     private func handleSearchError(for query: String, error: Error) {
-        searchState = .error("No results found for \"\(query)\". Error: \(error.localizedDescription)")
+        // Search Not Found Logic
     }
 
     // MARK: - Save City Logic
@@ -98,16 +98,24 @@ final class HomeViewModel: ObservableObject {
     func loadSavedCity() {
         savedCityState = .loading
 
-        do {
-            if let savedCity = try loadSavedCityUseCase.execute() {
-                weather = savedCity
-                savedCityState = .success(savedCity)
-            } else {
-                savedCityState = .idle
+        Task {
+            do {
+                if let savedCity = try await loadSavedCityUseCase.execute() {
+                    await MainActor.run {
+                        weather = savedCity
+                        savedCityState = .success(savedCity)
+                    }
+                } else {
+                    await MainActor.run {
+                        savedCityState = .idle
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    savedCityState = .error("Failed to load saved city: \(error.localizedDescription)")
+                }
+                handleError("Failed to load saved city", error: error)
             }
-        } catch {
-            savedCityState = .error("Failed to load saved city: \(error.localizedDescription)")
-            handleError("Failed to load saved city", error: error)
         }
     }
 

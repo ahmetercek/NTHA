@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoadSavedCityUseCaseProtocol {
-    func execute() throws -> WeatherResponse?
+    func execute() async throws -> WeatherResponse?
 }
 
 final class LoadSavedCityUseCase: LoadSavedCityUseCaseProtocol {
@@ -18,10 +18,12 @@ final class LoadSavedCityUseCase: LoadSavedCityUseCaseProtocol {
         self.cityRepository = cityRepository
     }
 
-    func execute() -> WeatherResponse? {
+    func execute() async throws -> WeatherResponse? {
         do {
-            guard let savedCity = try cityRepository.fetchSavedCity() else { return nil }
+            // Attempt to fetch saved city data
+            guard let savedCity = try await cityRepository.fetchSavedCity() else { return nil }
 
+            // Map the saved city to WeatherResponse
             return WeatherResponse(
                 location: Location(name: savedCity.name ?? "", region: "", country: ""),
                 current: CurrentWeather(
@@ -33,8 +35,21 @@ final class LoadSavedCityUseCase: LoadSavedCityUseCaseProtocol {
                 )
             )
         } catch {
-            print("Error loading saved city: \(error.localizedDescription)")
-            return nil
+            // Propagate the error to be handled by the caller
+            throw LoadSavedCityError.failedToLoadSavedCity(error.localizedDescription)
+        }
+    }
+}
+
+// MARK: - LoadSavedCityError
+
+enum LoadSavedCityError: Error {
+    case failedToLoadSavedCity(String)
+
+    var localizedDescription: String {
+        switch self {
+        case .failedToLoadSavedCity(let message):
+            return "Failed to load saved city: \(message)"
         }
     }
 }

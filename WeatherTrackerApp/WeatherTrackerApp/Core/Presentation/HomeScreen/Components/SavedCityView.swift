@@ -11,22 +11,21 @@ struct SavedCityView: View {
     let savedCity: WeatherResponse
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 45) {
             // Weather Icon
             WeatherIconView(iconURL: savedCity.current.condition.icon)
-
             // City Information
             CityInfoView(
                 cityName: savedCity.location.name,
                 temperature: savedCity.current.tempC
-            )
-
+            ).padding(.bottom, 30)
             // Weather Details
             WeatherDetailsView(
                 humidity: savedCity.current.humidity,
                 uvIndex: savedCity.current.uv,
                 feelsLike: savedCity.current.feelslikeC
-            )
+            ).padding(15)
+            Spacer()
         }
         .padding(.horizontal)
     }
@@ -40,9 +39,9 @@ struct WeatherIconView: View {
     var body: some View {
         AsyncImage(url: URL(string: "https:\(iconURL)")) { image in
             image
-                .resizable()
+                .resizable().aspectRatio(contentMode: .fit)
                 .scaledToFit()
-                .frame(width: 100, height: 100)
+                .frame(height: 123, alignment: .bottom)
         } placeholder: {
             ProgressView() // Loading spinner while image loads
         }
@@ -54,17 +53,30 @@ struct CityInfoView: View {
     let temperature: Double
 
     var body: some View {
-        VStack(spacing: 8) {
-            Text(cityName)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.primary)
-
-            Text("\(temperature, specifier: "%.1f")°C")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-                .foregroundColor(.blue)
-        }
+        VStack(spacing: 20) {
+            HStack() {
+                Text(cityName)
+                    .font(.custom("Poppins-Bold", size: 35))
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Image("city_vector")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 21, height: 21)
+            }
+            HStack {
+                Text("\(Int(temperature))")
+                    .font(.custom("Poppins-Medium", size: 70))
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Text("°")
+                    .font(.custom("Poppins-Medium", size: 30))
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                    .frame(height: 80, alignment: .top)
+                    
+            }
+        }.frame(height:75, alignment: .top)
     }
 }
 
@@ -74,14 +86,16 @@ struct WeatherDetailsView: View {
     let feelsLike: Double
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack() {
             DetailItem(title: "Humidity", value: "\(humidity)%")
-            DetailItem(title: "UV Index", value: "\(uvIndex)")
-            DetailItem(title: "Feels Like", value: "\(feelsLike)°C")
+            Spacer()
+            DetailItem(title: "UV", value: "\(uvIndex)")
+            Spacer()
+            DetailItem(title: "Feels Like", value: "\(Int(feelsLike))\u{00B0}")
         }
-        .padding()
+        .padding(25)
         .background(Color.gray.opacity(0.1))
-        .cornerRadius(10)
+        .cornerRadius(16)
     }
 }
 
@@ -90,13 +104,15 @@ struct DetailItem: View {
     let value: String
 
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             Text(title)
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.custom("Poppins-Medium", size: 12))
+                .fontWeight(.bold)
+                .foregroundColor(Color(hex: "C4C4C4"))
             Text(value)
-                .font(.headline)
-                .foregroundColor(.primary)
+                .font(.custom("Poppins-Medium", size: 15))
+                .fontWeight(.bold)
+                .foregroundColor(Color(hex: "9A9A9A"))
         }
     }
 }

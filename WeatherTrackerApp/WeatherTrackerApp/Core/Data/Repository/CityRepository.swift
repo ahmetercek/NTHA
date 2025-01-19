@@ -10,15 +10,18 @@ import CoreData
 
 protocol CityRepository {
     func saveCity(_ city: WeatherResponse) throws
-    func fetchSavedCity() throws -> SavedCity?
+    func fetchSavedCity() async throws -> SavedCity?
     func replaceCity(with city: WeatherResponse) throws
 }
 
 final class CityRepositoryImpl: CityRepository {
     private let context: NSManagedObjectContext
+    private let weatherService: WeatherService
 
-    init(context: NSManagedObjectContext = CoreDataManager.shared.context) {
+    init(context: NSManagedObjectContext = CoreDataManager.shared.context,
+         weatherService: WeatherService = WeatherServiceImpl()) {
         self.context = context
+        self.weatherService = weatherService
     }
 
     func saveCity(_ city: WeatherResponse) throws {
@@ -35,19 +38,27 @@ final class CityRepositoryImpl: CityRepository {
         try saveContext()
     }
 
-    func fetchSavedCity() throws -> SavedCity? {
-        let fetchRequest: NSFetchRequest<SavedCity> = SavedCity.fetchRequest()
-
-        do {
-            return try context.fetch(fetchRequest).first
-        } catch {
-            throw CoreDataError.fetchFailed("Failed to fetch saved city: \(error.localizedDescription)")
+    func fetchSavedCity() async throws -> SavedCity? {
+        if let localCity = try? fetchLocalCity() {
+            do {
+                // Fetch fresh data from WeatherService
+                let freshWeather = try await weatherService.fetchWeather(for: localCity.name ?? "")
+                try replaceCity(with: freshWeather) // Save fresh data locally
+                return try fetchLocalCity() // Return updated local city
+            } catch {
+                // If fetching fresh data fails, return local city
+                print("Failed to fetch fresh data. Returning local data. Error: \(error.localizedDescription)")
+                return localCity
+            }
         }
+
+        // No local data available
+        return nil
     }
 
     func replaceCity(with city: WeatherResponse) throws {
         // Delete the existing city
-        if let existingCity = try fetchSavedCity() {
+        if let existingCity = try fetchLocalCity() {
             context.delete(existingCity)
         }
 
@@ -56,6 +67,16 @@ final class CityRepositoryImpl: CityRepository {
     }
 
     // MARK: - Private Helper Methods
+
+    private func fetchLocalCity() throws -> SavedCity? {
+        let fetchRequest: NSFetchRequest<SavedCity> = SavedCity.fetchRequest()
+
+        do {
+            return try context.fetch(fetchRequest).first
+        } catch {
+            throw CoreDataError.fetchFailed("Failed to fetch saved city: \(error.localizedDescription)")
+        }
+    }
 
     private func saveContext() throws {
         if context.hasChanges {

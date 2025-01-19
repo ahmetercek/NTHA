@@ -12,14 +12,13 @@ struct NoCitySelectedView: View {
         VStack(spacing: 10) {
             // Big Title Label
             Text("No City Selected")
-                .font(.title) // Adjust as needed for size
-                .fontWeight(.bold)
+                .font(.custom("Poppins-Bold", size: 30))
+                .foregroundColor(.primary)
                 .foregroundColor(Color(hex: "2C2C2C"))
             
             // Subtitle Label
             Text("Please Search For A City")
-                .font(.subheadline) // Slightly smaller than title
-                .fontWeight(.bold)
+                .font(.custom("Poppins-Bold", size: 15))
                 .foregroundColor(Color(hex: "2C2C2C"))
         }
     }
