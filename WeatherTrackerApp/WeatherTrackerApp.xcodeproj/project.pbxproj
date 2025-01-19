@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		E3DA82422D3C7AE4002704B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3DA81CC2D3C3BB9002704B8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3DA81D32D3C3BB9002704B8;
+			remoteInfo = WeatherTrackerApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		E3DA81D42D3C3BB9002704B8 /* WeatherTrackerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherTrackerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3DA823E2D3C7AE4002704B8 /* WeatherTrackerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTrackerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = WeatherTrackerApp;
 			sourceTree = "<group>";
 		};
+		E3DA823F2D3C7AE4002704B8 /* WeatherTrackerAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WeatherTrackerAppTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E3DA81D12D3C3BB9002704B8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DA823B2D3C7AE4002704B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				E3DA81D62D3C3BB9002704B8 /* WeatherTrackerApp */,
+				E3DA823F2D3C7AE4002704B8 /* WeatherTrackerAppTests */,
 				E3DA81D52D3C3BB9002704B8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				E3DA81D42D3C3BB9002704B8 /* WeatherTrackerApp.app */,
+				E3DA823E2D3C7AE4002704B8 /* WeatherTrackerAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = E3DA81D42D3C3BB9002704B8 /* WeatherTrackerApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E3DA823D2D3C7AE4002704B8 /* WeatherTrackerAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3DA82442D3C7AE4002704B8 /* Build configuration list for PBXNativeTarget "WeatherTrackerAppTests" */;
+			buildPhases = (
+				E3DA823A2D3C7AE4002704B8 /* Sources */,
+				E3DA823B2D3C7AE4002704B8 /* Frameworks */,
+				E3DA823C2D3C7AE4002704B8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3DA82432D3C7AE4002704B8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E3DA823F2D3C7AE4002704B8 /* WeatherTrackerAppTests */,
+			);
+			name = WeatherTrackerAppTests;
+			packageProductDependencies = (
+			);
+			productName = WeatherTrackerAppTests;
+			productReference = E3DA823E2D3C7AE4002704B8 /* WeatherTrackerAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					E3DA81D32D3C3BB9002704B8 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					E3DA823D2D3C7AE4002704B8 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = E3DA81D32D3C3BB9002704B8;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				E3DA81D32D3C3BB9002704B8 /* WeatherTrackerApp */,
+				E3DA823D2D3C7AE4002704B8 /* WeatherTrackerAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E3DA81D22D3C3BB9002704B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DA823C2D3C7AE4002704B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E3DA823A2D3C7AE4002704B8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E3DA82432D3C7AE4002704B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3DA81D32D3C3BB9002704B8 /* WeatherTrackerApp */;
+			targetProxy = E3DA82422D3C7AE4002704B8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E3DA81E02D3C3BBA002704B8 /* Debug */ = {
@@ -302,6 +377,42 @@
 			};
 			name = Release;
 		};
+		E3DA82452D3C7AE4002704B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29WYMZU6R4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.a.WeatherTrackerAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WeatherTrackerApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WeatherTrackerApp";
+			};
+			name = Debug;
+		};
+		E3DA82462D3C7AE4002704B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 29WYMZU6R4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.a.WeatherTrackerAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WeatherTrackerApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WeatherTrackerApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -319,6 +430,15 @@
 			buildConfigurations = (
 				E3DA81E32D3C3BBA002704B8 /* Debug */,
 				E3DA81E42D3C3BBA002704B8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3DA82442D3C7AE4002704B8 /* Build configuration list for PBXNativeTarget "WeatherTrackerAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3DA82452D3C7AE4002704B8 /* Debug */,
+				E3DA82462D3C7AE4002704B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
